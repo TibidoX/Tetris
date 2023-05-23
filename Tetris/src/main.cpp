@@ -35,8 +35,13 @@
 **
 *******************************************************************************/
 
+#include <QScopedPointer>
+#include <QGuiApplication>
+#include <QQuickView>
+
 #include <auroraapp.h>
-#include <QtQuick>
+#include <QApplication>
+//#include "fileio.h"
 
 int main(int argc, char *argv[])
 {
@@ -45,8 +50,9 @@ int main(int argc, char *argv[])
     application->setApplicationName(QStringLiteral("Tetris"));
 
     QScopedPointer<QQuickView> view(Aurora::Application::createView());
-    view->setSource(Aurora::Application::pathTo(QStringLiteral("qml/Tetris.qml")));
+    view->setSource(Aurora::Application::pathTo(QStringLiteral("qml/harbour-sailtris.qml")));
     view->show();
 
+    //qmlRegisterType<FileIO, 1>("harbour.ru.auroraos.Tetris.FileIO", 1, 0, "FileIO");
     return application->exec();
 }

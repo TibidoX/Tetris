@@ -43,13 +43,9 @@ CONFIG += \
 PKGCONFIG += \
 
 SOURCES += \
-    src/main.cpp \
-    src/tetrispiece.cpp \
-    src/tetriswindow.cpp
+    src/main.cpp
 
-HEADERS += \
-    src/tetrispiece.h \
-    src/tetriswindow.h
+HEADERS +=
 
 DISTFILES += \
     rpm/ru.auroraos.Tetris.spec \

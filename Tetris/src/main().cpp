@@ -35,17 +35,23 @@
 **
 *******************************************************************************/
 
-import QtQuick 2.0
-import Sailfish.Silica 1.0
-//import harbour.ru.auroraos.lab.TetrisWindow 0.1
+#include <QScopedPointer>
+#include <QGuiApplication>
+#include <QQuickView>
 
-Page {
-    objectName: "mainPage"
-    allowedOrientations: Orientation.All
+#include <auroraapp.h>
+#include <QApplication>
+#include "tetriswindow.h"
 
-    property list<Switch> field;
+int main(int argc, char *argv[])
+{
+    QScopedPointer<QGuiApplication> application(Aurora::Application::application(argc, argv));
+    application->setOrganizationName(QStringLiteral("ru.auroraos"));
+    application->setApplicationName(QStringLiteral("Tetris"));
 
-//    Component.onCompleted: {
-//        for (var i = 0; i < )
-//    }
+    QScopedPointer<QQuickView> view(Aurora::Application::createView());
+    view->setSource(Aurora::Application::pathTo(QStringLiteral("qml/Tetris.qml")));
+    view->show();
+    qmlRegisterType<TetrisWindow>("harbour.ru.auroraos.lab.TetrisWindow", 0, 1, "TetrisWindow");
+    return application->exec();
 }
