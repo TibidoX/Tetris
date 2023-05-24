@@ -9,31 +9,18 @@
 
 import QtQuick 2.0
 import Sailfish.Silica 1.0
-//import harbour.sailtris.FileIO 1.0
 import ".."
 
 Page {
-
-//    FileIO {
-//        id: fileIO
-//    }
-
     Functions {
         id: functions
     }
 
     id: page
     property int scoreValue
-    //property int speedValue
-    property real difficulty: 1
-    property int level
+    property real difficulty: 500
     property int activeBlock
     property int futureBlock: -1
-    property bool savedGame: false
-    property string difficultyText: difficulty === 0.5 ? qsTr("Very Hard") : difficulty === 0.75 ? qsTr("Hard") :difficulty === 1 ? qsTr("Normal") :difficulty === 1.5 ? qsTr("Easy") : qsTr("Very Easy")
-    property int combo: 1
-    property int gravityBreak: 1
-    property bool pauseVal
 
     // 0 = l_normal; 1 = l_reverse;
     // 2 = s_normal; 3 = s_reverse;
@@ -46,33 +33,13 @@ Page {
     property real centerX
     property real centerY
 
-    //zamenit'
-    Timer {
-        id: gameOverTimer
-        property int i: 15
-        property int j: 11
-        property bool clear: true
-        interval: 1 //20
-        repeat: true
-        onTriggered : {
-            for (var i = 0; i < 204; i++) {
-                if (!(i < 12 || i > 191 || i % 12 === 0 || i % 12 === 11)) {
-                    repeater.itemAt(i).opacity = 0.1
-                }
-            }
-        }
-    }
-
-
     Timer {
         id: downTimer
-        interval: difficulty*(1338*Math.pow(Math.E,-0.26*level)+150)
+        interval: difficulty//difficulty*(1338*Math.pow(Math.E,-0.26*level)+150)
         repeat: true
         running: false
         onTriggered: {
             functions.flow()
-            //scoreValue += 1
-            //speedValue += 1
         }
     }
 
@@ -93,7 +60,7 @@ Page {
 
         Label {
             id: score
-            text:  difficultyText + " \n" + qsTr("Score ") + scoreValue + "\n"
+            text: qsTr("Score ") + scoreValue + "\n"
             anchors {
                 top: parent.top
                 left: parent.left

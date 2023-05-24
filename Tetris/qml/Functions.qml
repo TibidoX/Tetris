@@ -4,16 +4,11 @@ import Sailfish.Silica 1.0
 Item {
     id: functions
 
-    // New Game: ok!
-
     function newGame() {
 
-        //pullDownMenu.enabled = false
         root.interactive = false
         mouseArea.enabled = true
-        //pushUpMenu.enabled = false
         downTimer.running = true
-        pauseVal = false
 
         // Empty grids
 
@@ -34,11 +29,7 @@ Item {
 
         // Reset score
 
-        level = 1
         scoreValue = 0
-        //speedValue = 0
-
-        // Calls generate()
 
         generate()
     }
@@ -440,81 +431,17 @@ Item {
     }
 
     function gameOver() {
-        var index = difficulty
         mouseArea.enabled = false
         downTimer.running = false
-        scoreValue -= 1
-        gameOverTimer.running = true
+        scoreValue = 0
+        gameOverClear();
     }
 
 
-    // Gravity bonus
-
-    function gravity() {
-        console.log("Ya zdes")
-        var count = 0
-        for (var i = 15; i > 0; i--)
-            for ( var j = 10; j > 0; j--) {
-                var index = i*12+j
-                if ( repeater.itemAt(index).active === 0) {
-                    for ( var k = 1; k < i; k++) {
-                        if (repeater.itemAt(index-12*k).active === 2) {
-                            repeater.itemAt(index).active = repeater.itemAt(index-12*k).active
-                            repeater.itemAt(index).opacity = repeater.itemAt(index-12*k).opacity
-                            repeater.itemAt(index).color = repeater.itemAt(index-12*k).color
-                            repeater.itemAt(index-12*k).active = 0
-                            repeater.itemAt(index-12*k).opacity = 0.1
-                            repeater.itemAt(index-12*k).color = Theme.secondaryColor
-                            break
-                        }
-                    }
-                }
-            }
-        var score = 0
-        var lines = []
-        for ( i = 1; i < 16; i++) {
-            var full = 0
-            for ( j = 1; j < 11; j++) {
-                if (repeater.itemAt(i*12+j).active === 2) {
-                    full++
-                }
-            }
-            if (full === 10)
-                lines[lines.length] = i
-        }
-        console.log("Full lines: " + lines)
-        score += lines.length*10
-
-        scoreValue += score
-        speedValue += score
-
-        // Increase Level
-
-        if ( speedValue > 1000){
-            speedValue = 0
-            level += 1
-            console.log("Timer set: " + downTimer.interval)
-        }
-
-        // Da rivedere ( forse ora va bene )
-
-        for ( k = 0; k < lines.length; k++) {
-            for ( i = lines[k]; i > 0; i--) {
-                if ( i === 1) {
-                    for ( j = 1; j < 11; j++) {
-                        repeater.itemAt(i*12+j).color = Theme.secondaryColor
-                        repeater.itemAt(i*12+j).active = 0
-                        repeater.itemAt(i*12+j).opacity = 0.1
-                    }
-                } else
-                    for ( j = 1; j < 11; j++) {
-                        if (repeater.itemAt(i*12+j).active !== 3){
-                            repeater.itemAt(i*12+j).color = repeater.itemAt(i*12+j-12).color
-                            repeater.itemAt(i*12+j).active = repeater.itemAt(i*12+j-12).active
-                            repeater.itemAt(i*12+j).opacity = repeater.itemAt(i*12+j-12).opacity
-                        }
-                    }
-
+    function gameOverClear() {
+        for (var i = 0; i < 204; i++) {
+            if (!(i < 12 || i > 191 || i % 12 === 0 || i % 12 === 11)) {
+                repeater.itemAt(i).opacity = 0.1
             }
         }
     }
@@ -522,7 +449,6 @@ Item {
     // Down Flow Traslation: ok!
 
     function flow() {
-        //console.log("Flow")
         var down = 1
         for (var i = 190; i > 12; i-- )
             if (repeater.itemAt(i).active === 1 && repeater.itemAt(i+12).active > 1)
@@ -636,7 +562,6 @@ Item {
             }
             centerX -= 1
         }
-        //ghost()
     }
 
     // Right traslation: ok!
@@ -660,7 +585,6 @@ Item {
             }
             centerX += 1
         }
-        //ghost()
     }
 
     function score() {
@@ -687,7 +611,7 @@ Item {
                 score += 1000
             else if (lines.length > 1)
                 score *= lines.length
-            console.log("combo: " + combo)
+            //console.log("combo: " + combo)
         }
 
         scoreValue += score

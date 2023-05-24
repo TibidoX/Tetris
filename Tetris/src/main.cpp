@@ -50,7 +50,7 @@ int main(int argc, char *argv[])
     application->setApplicationName(QStringLiteral("Tetris"));
 
     QScopedPointer<QQuickView> view(Aurora::Application::createView());
-    view->setSource(Aurora::Application::pathTo(QStringLiteral("qml/harbour-sailtris.qml")));
+    view->setSource(Aurora::Application::pathTo(QStringLiteral("qml/app_window.qml")));
     view->show();
 
     //qmlRegisterType<FileIO, 1>("harbour.ru.auroraos.Tetris.FileIO", 1, 0, "FileIO");
